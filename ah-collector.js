@@ -1,11 +1,16 @@
 // eslint-disable-next-line camelcase
 const async_hooks = require('async_hooks')
 const util = require('util')
+const { captureStack } = require('./lib/stack')
+
+function no(hook, activity, resource) { return false }
 
 class ActivityCollector {
-  constructor({ start }) {
+  constructor({ start, captureStack = no, captureResource = no }) {
     this._start = start
     this._activities = new Map()
+    this._captureStack = captureStack
+    this._captureResource = captureResource
 
     this._asyncHook = async_hooks.createHook({
         init    : this._init.bind(this)
@@ -64,21 +69,39 @@ class ActivityCollector {
     const activity = { uid, type, triggerId }
     this._stamp(activity, 'init')
     this._activities.set(uid, activity)
+    if (this._captureStack('init', activity, resource)) {
+      activity.initStack = captureStack()
+    }
   }
 
   _before(uid) {
     const h = this._getActivity(uid, 'before')
     this._stamp(h, 'before')
+    if (this._captureStack('before', h, h.resource)) {
+      if (h._beforeStacks == null) h.beforeStacks = []
+      h.beforeStacks.push(captureStack())
+    }
   }
 
   _after(uid) {
     const h = this._getActivity(uid, 'after')
     this._stamp(h, 'after')
+    if (this._captureStack('after', h, h.resource)) {
+      if (h._afterStacks == null) h.afterStacks = []
+      h.afterStacks.push(captureStack())
+    }
   }
 
   _destroy(uid) {
     const h = this._getActivity(uid, 'destroy')
     this._stamp(h, 'destroy')
+    if (this._captureStack('destroy', h, h.resource)) {
+      h.destroyStack = captureStack()
+    }
+  }
+
+  cleanStacks() {
+
   }
 
   inspect(opts = {}) {
