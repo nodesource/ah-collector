@@ -1,7 +1,7 @@
 // eslint-disable-next-line camelcase
 const async_hooks = require('async_hooks')
 const util = require('util')
-const { captureStack } = require('./lib/stack')
+const { captureStack, processStack } = require('./lib/stack')
 
 function no(hook, activity, resource) { return false }
 
@@ -41,6 +41,9 @@ class ActivityCollector {
   }
 
   get activities() {
+    // prevent users from adding/removing activities
+    // however the activity references are shared, so those
+    // keep in mind to not modify these
     return new Map(this._activities)
   }
 
@@ -100,8 +103,22 @@ class ActivityCollector {
     }
   }
 
-  cleanStacks() {
-
+  processStacks() {
+    // we don't process stacks when they are takend for performance reasons
+    for (const activity of this.activities.values()) {
+      if (activity.initStack != null) {
+        activity.initStack = processStack(activity.initStack)
+      }
+      if (activity.beforeStacks != null) {
+        activity.beforeStacks = activity.beforeStacks.map(processStack)
+      }
+      if (activity.afterStacks != null) {
+        activity.afterStacks = activity.afterStacks.map(processStack)
+      }
+      if (activity.destroyStack != null) {
+        activity.destroyStack = processStack(activity.destroyStack)
+      }
+    }
   }
 
   inspect(opts = {}) {

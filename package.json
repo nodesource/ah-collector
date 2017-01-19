@@ -4,7 +4,7 @@
   "description": "Super light wrapper around async-hooks to collect resources created during async operations.",
   "main": "ah-collector.js",
   "scripts": {
-    "test": "tape test/*.js"
+    "test": "set -e; for t in test/*.js; do node $t; done"
   },
   "repository": {
     "type": "git",
