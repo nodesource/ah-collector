@@ -6,6 +6,17 @@ const { captureStack, processStack } = require('./lib/stack')
 function no(hook, activity, resource) { return false }
 
 class ActivityCollector {
+  /**
+   * Creates an instance of an ActivityCollector
+   * @name ActivityCollector
+   * @function
+   * @param {Array.<Number>} start start time obtained via `process.hrtime()`
+   * @param {function} captureStack predicate to decide if a stack trace should be obtained.
+   *        The predicate is called with (hook, { uid, type, triggerId }, resource)
+   *        The hook is init, before, after or destroy.
+   *        The uid, type, triggerId are activity information.
+   *        The resource is provided only during 'init' or if it was captured.
+   */
   constructor({ start, captureStack = no, captureResource = no }) {
     this._start = start
     this._activities = new Map()
@@ -20,26 +31,64 @@ class ActivityCollector {
     })
   }
 
+  /**
+   * Enables the collection of async hooks.
+   * **Needs to be called** as otherwise nothing will be collected.
+   *
+   * @name activityCollector.enable
+   * @function
+   * @return {ActivityCollector} activityCollector
+   */
   enable() {
     this._asyncHook.enable()
     return this
   }
 
+  /**
+   * Disables the collection of async hooks.
+   * Nothing will be collected until `activityCollector.enable()` is called.
+   *
+   * @name activityCollector.disable
+   * @function
+   * @return {ActivityCollector} activityCollector
+   */
   disable() {
     this._asyncHook.disable()
     return this
   }
 
+  /**
+   * Clears all currently collected activity.
+   *
+   * @name activityCollector.clear
+   * @function
+   * @return {ActivityCollector} activityCollector
+   */
   clear() {
     this._activities = new Map()
     return this
   }
 
+  /**
+   * Returns an Array of all activities collected so far that are of the specified type(s).
+   *
+   * @name activityCollector.activitiesOfTypes
+   * @function
+   * @param {Array.<String>|String} type the type to match
+   * @return {Array} activities matching the specified type(s)
+   */
   activitiesOfTypes(types) {
     if (!Array.isArray(types)) types = [ types ]
     return this.activitiesArray.filter((x) => types.indexOf(x.type) >= 0)
   }
 
+  /**
+   * A `getter` that returns a map of all activities collected so far.
+   *
+   * @name activityCollector.activities
+   * @function
+   * @return {Map} activities
+   */
   get activities() {
     // prevent users from adding/removing activities
     // however the activity references are shared, so those
@@ -47,6 +96,13 @@ class ActivityCollector {
     return new Map(this._activities)
   }
 
+  /**
+   * A `getter` that returns an Array  of all activities collected so far.
+   *
+   * @name activityCollector.activitiesArray
+   * @function
+   * @return {Array} activities
+   */
   get activitiesArray() {
     return Array.from(this._activities.values())
   }
@@ -103,6 +159,15 @@ class ActivityCollector {
     }
   }
 
+  /**
+   * Processes all stacks that were captured for specific activities
+   * This is done in line, i.e. the actual stacks of the activity objects
+   * are modified.
+   *
+   * @name activityCollector.processStacks
+   * @function
+   * @return {ActivityCollector} activityCollector
+   */
   processStacks() {
     // we don't process stacks when they are takend for performance reasons
     for (const activity of this.activities.values()) {
@@ -121,6 +186,20 @@ class ActivityCollector {
     }
   }
 
+  /**
+   * Dumps all so far collected activities to the console.
+   * This is useful for diagnostic purposes.
+   *
+   * If no arguments are provided, all activities are dumped.
+   *
+   * @name activityCollector.inspect
+   * @function
+   * @param {Object} opts allow tweaking which activities are dumped and how
+   * @param {Array.<String>|String} opts.types type(s) to dump
+   * @param {String} opts.stage the stage to print as the title of the dump
+   * @param {Number} opts.depth the depth with which the dumped object is inspected
+   * @return {ActivityCollector} activityCollector
+   */
   inspect(opts = {}) {
     if (typeof opts === 'string') opts = { types: opts }
     const { types = null, depth = 5, stage = null } = opts
@@ -130,6 +209,7 @@ class ActivityCollector {
 
     if (stage != null) console.log('\n%s', stage)
     console.log(util.inspect(activities, false, depth, true))
+    return this
   }
 }
 
