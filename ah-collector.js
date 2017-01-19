@@ -17,10 +17,17 @@ class ActivityCollector {
 
   enable() {
     this._asyncHook.enable()
+    return this
   }
 
   disable() {
     this._asyncHook.disable()
+    return this
+  }
+
+  clear() {
+    this._activities = new Map()
+    return this
   }
 
   activitiesOfTypes(types) {
@@ -33,7 +40,7 @@ class ActivityCollector {
   }
 
   get activitiesArray() {
-    return Array.from(this._activities.valued())
+    return Array.from(this._activities.values())
   }
 
   _stamp(h, hook) {
