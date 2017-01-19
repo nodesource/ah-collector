@@ -192,15 +192,15 @@ class ActivityCollector {
    *
    * If no arguments are provided, all activities are dumped.
    *
-   * @name activityCollector.inspect
+   * @name activityCollector.dump
    * @function
    * @param {Object} opts allow tweaking which activities are dumped and how
    * @param {Array.<String>|String} opts.types type(s) to dump
    * @param {String} opts.stage the stage to print as the title of the dump
-   * @param {Number} opts.depth the depth with which the dumped object is inspected
+   * @param {Number} opts.depth the depth with which the dumped object is dumped
    * @return {ActivityCollector} activityCollector
    */
-  inspect(opts = {}) {
+  dump(opts = {}) {
     if (typeof opts === 'string') opts = { types: opts }
     const { types = null, depth = 5, stage = null } = opts
     const activities = types == null
