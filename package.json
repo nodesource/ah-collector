@@ -1,6 +1,6 @@
 {
   "name": "ah-collector",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Super light wrapper around async-hooks to collect information about resources created during async operations.",
   "main": "ah-collector.js",
   "scripts": {
