@@ -3,7 +3,7 @@
 Super light wrapper around async-hooks to collect information about resources created during async operations.
 
 ```js
-const ActivityCollector = require('../ah-collector')
+const ActivityCollector = require('ah-collector')
 
 function captureStack(hook, { uid, type, triggerId }, resource) {
   // Predicate to decide if a stack should be captured or not.
