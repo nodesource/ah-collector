@@ -1,7 +1,7 @@
 {
   "name": "ah-collector",
   "version": "0.0.0",
-  "description": "Super light wrapper around async-hooks to collect resources created during async operations.",
+  "description": "Super light wrapper around async-hooks to collect information about resources created during async operations.",
   "main": "ah-collector.js",
   "scripts": {
     "test": "set -e; for t in test/*.js; do node $t; done"

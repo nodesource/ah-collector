@@ -184,6 +184,7 @@ class ActivityCollector {
         activity.destroyStack = processStack(activity.destroyStack)
       }
     }
+    return this
   }
 
   /**
