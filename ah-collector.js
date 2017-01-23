@@ -1,7 +1,7 @@
 // eslint-disable-next-line camelcase
 const async_hooks = require('async_hooks')
 const util = require('util')
-const { captureStack, processStack } = require('./lib/stack')
+const { captureStack, processStack: defaultProcessStack } = require('./lib/stack')
 
 function no(hook, activity, resource) { return false }
 
@@ -16,12 +16,20 @@ class ActivityCollector {
    *        The hook is init, before, after or destroy.
    *        The uid, type, triggerId are activity information.
    *        The resource is provided only during 'init' or if it was captured.
+   * @param {function} processStack allows overriding the function used to process the stacks
+   *        when `activityCollector.processStacks` is called
    */
-  constructor({ start, captureStack = no, captureResource = no }) {
+  constructor({
+      start
+    , captureStack = no
+    , captureResource = no
+    , processStack = defaultProcessStack
+  }) {
     this._start = start
     this._activities = new Map()
     this._captureStack = captureStack
     this._captureResource = captureResource
+    this._processStack = processStack
 
     this._asyncHook = async_hooks.createHook({
         init    : this._init.bind(this)
@@ -137,7 +145,7 @@ class ActivityCollector {
     const h = this._getActivity(uid, 'before')
     this._stamp(h, 'before')
     if (this._captureStack('before', h, h.resource)) {
-      if (h._beforeStacks == null) h.beforeStacks = []
+      if (h.beforeStacks == null) h.beforeStacks = []
       h.beforeStacks.push(captureStack())
     }
   }
@@ -146,7 +154,7 @@ class ActivityCollector {
     const h = this._getActivity(uid, 'after')
     this._stamp(h, 'after')
     if (this._captureStack('after', h, h.resource)) {
-      if (h._afterStacks == null) h.afterStacks = []
+      if (h.afterStacks == null) h.afterStacks = []
       h.afterStacks.push(captureStack())
     }
   }
@@ -172,16 +180,16 @@ class ActivityCollector {
     // we don't process stacks when they are takend for performance reasons
     for (const activity of this.activities.values()) {
       if (activity.initStack != null) {
-        activity.initStack = processStack(activity.initStack)
+        activity.initStack = this._processStack(activity.initStack)
       }
       if (activity.beforeStacks != null) {
-        activity.beforeStacks = activity.beforeStacks.map(processStack)
+        activity.beforeStacks = activity.beforeStacks.map(this._processStack)
       }
       if (activity.afterStacks != null) {
-        activity.afterStacks = activity.afterStacks.map(processStack)
+        activity.afterStacks = activity.afterStacks.map(this._processStack)
       }
       if (activity.destroyStack != null) {
-        activity.destroyStack = processStack(activity.destroyStack)
+        activity.destroyStack = this._processStack(activity.destroyStack)
       }
     }
     return this

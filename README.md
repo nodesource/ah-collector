@@ -51,6 +51,8 @@ progress](https://github.com/thlorenz/node/blob/trevnorris-async-wrap-eps-impl%2
   *        The hook is init, before, after or destroy.
   *        The uid, type, triggerId are activity information.
   *        The resource is provided only during 'init' or if it was captured.
+   * @param {function} processStack allows overriding the function used to process the stacks
+   *        when `activityCollector.processStacks` is called
   */
 
 /**
