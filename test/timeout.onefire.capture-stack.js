@@ -1,16 +1,18 @@
 const test = require('tape')
 const { oneTimeout } = require('./utils/common-checks')
 const ActivityCollector = require('../ah-collector')
+const StackCapturer = require('ah-stack-capturer')
+
+function shouldCapture(event, type) {
+  // capture only inits of the TIMERWRAP but everything of the Timeout
+  return type === 'Timeout' || (type === 'TIMERWRAP' && event === 'init')
+}
+const stackCapturer = new StackCapturer({ shouldCapture })
 
 const collector = new ActivityCollector({
     start: process.hrtime()
-  , captureStack
+  , stackCapturer
 }).enable()
-
-function captureStack(hook, { uid, type, triggerId }, resource) {
-  // capture only inits of the TIMERWRAP but everything of the Timeout
-  return type === 'Timeout' || (type === 'TIMERWRAP' && hook === 'init')
-}
 
 process.on('exit', onexit)
 

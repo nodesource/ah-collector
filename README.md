@@ -46,13 +46,9 @@ progress](https://github.com/thlorenz/node/blob/trevnorris-async-wrap-eps-impl%2
   * @name ActivityCollector
   * @function
   * @param {Array.<Number>} start start time obtained via `process.hrtime()`
-  * @param {function} captureStack predicate to decide if a stack trace should be obtained.
-  *        The predicate is called with (hook, { uid, type, triggerId }, resource)
-  *        The hook is init, before, after or destroy.
-  *        The uid, type, triggerId are activity information.
-  *        The resource is provided only during 'init' or if it was captured.
-   * @param {function} processStack allows overriding the function used to process the stacks
-   *        when `activityCollector.processStacks` is called
+   * @param {StackCapturer} stackCapturer which is used to decide if a stack should be captured as well as to capture and process it
+   *                        @see [thlorenz/ah-stack-capturer](https://github.com/thlorenz/ah-stack-capturer)
+   *                        The default capturer used doesn't ever capture a stack so this feature is turned off by default.
   */
 
 /**
