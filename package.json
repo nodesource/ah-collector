@@ -4,7 +4,8 @@
   "description": "Super light wrapper around async-hooks to collect information about resources created during async operations.",
   "main": "ah-collector.js",
   "scripts": {
-    "test": "set -e; for t in test/*.js; do node $t; done"
+    "test": "set -e; for t in test/*.js; do node $t; done",
+    "doc": "gendo"
   },
   "repository": {
     "type": "git",
