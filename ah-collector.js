@@ -116,27 +116,27 @@ class ActivityCollector {
     h[hook].push((time[0] * 1e9) + time[1])
   }
 
-  _getActivity(uid, hook) {
-    const h = this._activities.get(uid)
+  _getActivity(id, hook) {
+    const h = this._activities.get(id)
     if (!h) {
-      const stub = { uid, type: 'Unknown' }
-      this._activities.set(uid, stub)
+      const stub = { id, type: 'Unknown' }
+      this._activities.set(id, stub)
       return stub
     }
     return h
   }
 
-  _init(uid, type, triggerId, resource) {
-    const activity = { uid, type, triggerId }
+  _init(id, type, triggerId, resource) {
+    const activity = { id, type, triggerId }
     this._stamp(activity, 'init')
-    this._activities.set(uid, activity)
+    this._activities.set(id, activity)
     if (this._stackCapturer.shouldCaptureStack('init', activity.type)) {
       activity.initStack = this._stackCapturer.captureStack()
     }
   }
 
-  _before(uid) {
-    const h = this._getActivity(uid, 'before')
+  _before(id) {
+    const h = this._getActivity(id, 'before')
     this._stamp(h, 'before')
     if (this._stackCapturer.shouldCaptureStack('before', h.type)) {
       if (h.beforeStacks == null) h.beforeStacks = []
@@ -144,8 +144,8 @@ class ActivityCollector {
     }
   }
 
-  _after(uid) {
-    const h = this._getActivity(uid, 'after')
+  _after(id) {
+    const h = this._getActivity(id, 'after')
     this._stamp(h, 'after')
     if (this._stackCapturer.shouldCaptureStack('after', h.type)) {
       if (h.afterStacks == null) h.afterStacks = []
@@ -153,8 +153,8 @@ class ActivityCollector {
     }
   }
 
-  _destroy(uid) {
-    const h = this._getActivity(uid, 'destroy')
+  _destroy(id) {
+    const h = this._getActivity(id, 'destroy')
     this._stamp(h, 'destroy')
     if (this._stackCapturer.shouldCaptureStack('destroy', h.type)) {
       h.destroyStack = this._stackCapturer.captureStack()

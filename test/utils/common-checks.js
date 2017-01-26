@@ -17,11 +17,11 @@ exports.oneTimeout = function oneTimeout(t, collector) {
   t.ok(Array.isArray(timer.init), 'timer has init')
   t.equal(timer.init.length, 1, 'timer has one init')
 
-  t.equal(typeof timer.uid, 'number', 'timer has number uid')
+  t.equal(typeof timer.id, 'number', 'timer has number id')
   t.equal(typeof timer.triggerId, 'number', 'timer has number triggerId')
   t.equal(timer.type, 'TIMERWRAP', 'timer has TIMERWRAP type')
 
-  t.equal(typeof timeout.uid, 'number', 'timeout has number uid')
+  t.equal(typeof timeout.id, 'number', 'timeout has number id')
   t.equal(typeof timeout.triggerId, 'number', 'timeout has number triggerId')
   t.equal(timeout.type, 'Timeout', 'timeout has Timeout type')
 }
