@@ -12,7 +12,7 @@ class ActivityCollector {
    * @function
    * @param {Array.<Number>} start start time obtained via `process.hrtime()`
    * @param {StackCapturer} stackCapturer which is used to decide if a stack should be captured as well as to capture and process it
-   *                        @see [thlorenz/ah-stack-capturer](https://github.com/thlorenz/ah-stack-capturer)
+   *                        @see [thlorenz/ah-stack-capturer](https://github.com/nodesource/ah-stack-capturer)
    *                        The default capturer used doesn't ever capture a stack so this feature is turned off by default.
    */
   constructor({
