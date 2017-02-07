@@ -214,6 +214,21 @@ class ActivityCollector {
     console.log(util.inspect(activities, false, depth, true))
     return this
   }
+
+  /**
+   * Dumps all types in the order they were collected including
+   * id and trigger id.
+   *
+   * Example: `FSREQWRAP:id:triggerId`
+   *
+   * @name activityCollector.dumpTypes
+   * @function
+   */
+  dumpTypes() {
+    for (const a of this.activities.values()) {
+      console.log(`${a.type}:${a.id}:${a.triggerId}`)
+    }
+  }
 }
 
 module.exports = ActivityCollector
