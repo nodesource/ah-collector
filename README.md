@@ -117,6 +117,13 @@ If no arguments are provided, all activities are dumped.
 
 Returns **[ActivityCollector](#activitycollector)** activityCollector
 
+### activityCollector.dumpTypes
+
+Dumps all types in the order they were collected including
+id and trigger id.
+
+Example: `FSREQWRAP:id:triggerId`
+
 ## License
 
 MIT
