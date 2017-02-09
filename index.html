@@ -1,0 +1,875 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset='utf-8' />
+  <title>  | Documentation</title>
+  <meta name='viewport' content='width=device-width,initial-scale=1'>
+  <link href='assets/bass.css' type='text/css' rel='stylesheet' />
+  <link href='assets/style.css' type='text/css' rel='stylesheet' />
+  <link href='assets/github.css' type='text/css' rel='stylesheet' />
+</head>
+<body class='documentation'>
+  <div class='max-width-4 mx-auto'>
+    <div class='clearfix md-mxn2'>
+      <div class='fixed xs-hide fix-3 overflow-auto max-height-100'>
+        <div class='py1 px2'>
+          <h3 class='mb0 no-anchor'></h3>
+          <div class='mb1'><code></code></div>
+          <input
+            placeholder='Filter'
+            id='filter-input'
+            class='col12 block input'
+            type='text' />
+          <div id='toc'>
+            <ul class='list-reset h5 py1-ul'>
+              
+                
+                <li><a
+                  href='#activitycollector'
+                  class="">
+                  ActivityCollector
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#activitycollectorenable'
+                  class="">
+                  activityCollector.enable
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#activitycollectordisable'
+                  class="">
+                  activityCollector.disable
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#activitycollectorclear'
+                  class="">
+                  activityCollector.clear
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#activitycollectoractivitiesoftypes'
+                  class="">
+                  activityCollector.activitiesOfTypes
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#activitycollectoractivities'
+                  class="">
+                  activityCollector.activities
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#activitycollectoractivitiesarray'
+                  class="">
+                  activityCollector.activitiesArray
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#activitycollectorprocessstacks'
+                  class="">
+                  activityCollector.processStacks
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#activitycollectordump'
+                  class="">
+                  activityCollector.dump
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#activitycollectordumptypes'
+                  class="">
+                  activityCollector.dumpTypes
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#activitycollectorunknown_type'
+                  class="">
+                  ActivityCollector#UNKNOWN_TYPE
+                  
+                </a>
+                
+                </li>
+              
+            </ul>
+          </div>
+          <div class='mt1 h6 quiet'>
+            <a href='http://documentation.js.org/reading-documentation.html'>Need help reading this?</a>
+          </div>
+        </div>
+      </div>
+      <div class='fix-margin-3'>
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='activitycollector'>
+      ActivityCollector
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Creates an instance of an ActivityCollector</p>
+
+
+  <div class='pre p1 fill-light mt0'>ActivityCollector($0: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="#activitycollector">ActivityCollector</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>$0</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+          <table class='mt1 mb2 fixed-table h5 col-12'>
+            <colgroup>
+              <col width='30%' />
+              <col width='70%' />
+            </colgroup>
+            <thead>
+              <tr class='bold fill-light'>
+                <th>Name</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody class='mt1'>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>$0.start</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>></code>
+                  </td>
+                  <td class='break-word'><span>start time obtained via 
+<code>process.hrtime()</code>
+</span></td>
+                </tr>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>$0.stackCapturer</span> <code class='quiet'>StackCapturer?</code>
+                  
+                    (default <code>defaultStackCapturer</code>)
+                  </td>
+                  <td class='break-word'><span>which is used to decide if a stack
+should be captured as well as to capture and process it @see
+
+<a href="https://github.com/nodesource/ah-stack-capturer">thlorenz/ah-stack-capturer</a>
+
+The default capturer used doesn't ever capture a stack so this feature is
+turned off by default.
+</span></td>
+                </tr>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>$0.requireInit</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>?</code>
+                  
+                    (default <code>false</code>)
+                  </td>
+                  <td class='break-word'><span>when 
+<code>true</code>
+ any activities whose 
+<code>init</code>
+ hook we missed
+are ignored even if we see 
+<code>before</code>
+, 
+<code>after</code>
+ and/or 
+<code>destroy</code>
+ hooks.
+</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="#activitycollector">ActivityCollector</a></code>:
+        instance of ActivityCollector
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='activitycollectorenable'>
+      activityCollector.enable
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Enables the collection of async hooks.
+<strong>Needs to be called</strong> as otherwise nothing will be collected.</p>
+
+
+  <div class='pre p1 fill-light mt0'>activityCollector.enable(): <a href="#activitycollector">ActivityCollector</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="#activitycollector">ActivityCollector</a></code>:
+        activityCollector
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='activitycollectordisable'>
+      activityCollector.disable
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Disables the collection of async hooks.
+Nothing will be collected until <code>activityCollector.enable()</code> is called.</p>
+
+
+  <div class='pre p1 fill-light mt0'>activityCollector.disable(): <a href="#activitycollector">ActivityCollector</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="#activitycollector">ActivityCollector</a></code>:
+        activityCollector
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='activitycollectorclear'>
+      activityCollector.clear
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Clears all currently collected activity.</p>
+
+
+  <div class='pre p1 fill-light mt0'>activityCollector.clear(): <a href="#activitycollector">ActivityCollector</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="#activitycollector">ActivityCollector</a></code>:
+        activityCollector
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='activitycollectoractivitiesoftypes'>
+      activityCollector.activitiesOfTypes
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Returns an Array of all activities collected so far that are of the specified type(s).</p>
+
+
+  <div class='pre p1 fill-light mt0'>activityCollector.activitiesOfTypes(type: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>type</span> <code class='quiet'>((<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>))</code>
+	    the type to match
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code>:
+        activities matching the specified type(s)
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='activitycollectoractivities'>
+      activityCollector.activities
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>A <code>getter</code> that returns a map of all activities collected so far.</p>
+
+
+  <div class='pre p1 fill-light mt0'>activityCollector.activities(): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map">Map</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map">Map</a></code>:
+        activities
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='activitycollectoractivitiesarray'>
+      activityCollector.activitiesArray
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>A <code>getter</code> that returns an Array  of all activities collected so far.</p>
+
+
+  <div class='pre p1 fill-light mt0'>activityCollector.activitiesArray(): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code>:
+        activities
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='activitycollectorprocessstacks'>
+      activityCollector.processStacks
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Processes all stacks that were captured for specific activities
+This is done in line, i.e. the actual stacks of the activity objects
+are modified.</p>
+
+
+  <div class='pre p1 fill-light mt0'>activityCollector.processStacks(): <a href="#activitycollector">ActivityCollector</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="#activitycollector">ActivityCollector</a></code>:
+        activityCollector
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='activitycollectordump'>
+      activityCollector.dump
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Dumps all so far collected activities to the console.
+This is useful for diagnostic purposes.</p>
+<p>If no arguments are provided, all activities are dumped.</p>
+
+
+  <div class='pre p1 fill-light mt0'>activityCollector.dump(opts: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="#activitycollector">ActivityCollector</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>opts</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    allow tweaking which activities are dumped and how
+
+          </div>
+          
+          <table class='mt1 mb2 fixed-table h5 col-12'>
+            <colgroup>
+              <col width='30%' />
+              <col width='70%' />
+            </colgroup>
+            <thead>
+              <tr class='bold fill-light'>
+                <th>Name</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody class='mt1'>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>opts.types</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+                  </td>
+                  <td class='break-word'><span>type(s) to dump
+</span></td>
+                </tr>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>opts.stage</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
+                  </td>
+                  <td class='break-word'><span>the stage to print as the title of the dump
+</span></td>
+                </tr>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>opts.depth</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></code>
+                  </td>
+                  <td class='break-word'><span>the depth with which the dumped object is dumped
+</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="#activitycollector">ActivityCollector</a></code>:
+        activityCollector
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='activitycollectordumptypes'>
+      activityCollector.dumpTypes
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Dumps all types in the order they were collected including
+id and trigger id.</p>
+<p>Example: <code>FSREQWRAP:id:triggerId</code></p>
+
+
+  <div class='pre p1 fill-light mt0'>activityCollector.dumpTypes()</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='activitycollectorunknown_type'>
+      ActivityCollector#UNKNOWN_TYPE
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Static getter that denotes the type given to activities whose type is unkown since
+we missed their <code>init</code> event.</p>
+
+
+  <div class='pre p1 fill-light mt0'>ActivityCollector#UNKNOWN_TYPE</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+      </div>
+    </div>
+  </div>
+  <script src='assets/anchor.js'></script>
+  <script src='assets/site.js'></script>
+</body>
+</html>
