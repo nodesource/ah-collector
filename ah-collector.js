@@ -149,6 +149,7 @@ class ActivityCollector {
     if (this._stackCapturer.shouldCaptureStack('init', activity.type)) {
       activity.initStack = this._stackCapturer.captureStack()
     }
+    return activity
   }
 
   _before(id) {
@@ -159,6 +160,7 @@ class ActivityCollector {
       if (h.beforeStacks == null) h.beforeStacks = []
       h.beforeStacks.push(this._stackCapturer.captureStack())
     }
+    return h
   }
 
   _after(id) {
@@ -169,6 +171,7 @@ class ActivityCollector {
       if (h.afterStacks == null) h.afterStacks = []
       h.afterStacks.push(this._stackCapturer.captureStack())
     }
+    return h
   }
 
   _destroy(id) {
@@ -178,6 +181,7 @@ class ActivityCollector {
     if (this._stackCapturer.shouldCaptureStack('destroy', h.type)) {
       h.destroyStack = this._stackCapturer.captureStack()
     }
+    return h
   }
 
   /**
