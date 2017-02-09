@@ -5,7 +5,7 @@ let collector = new ActivityCollector({ start: process.hrtime() })
 exports.collector = collector
 
 exports.init = function init() {
-  collector
+  return collector
     .disable()
     .clear()
     .enable()

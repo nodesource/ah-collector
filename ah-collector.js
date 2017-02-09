@@ -2,28 +2,43 @@
 const async_hooks = require('async_hooks')
 const util = require('util')
 const defaultStackCapturer = require('ah-stack-capturer').turnedOff()
+const UNKNOWN_TYPE = 'Unknown'
 
 function no(hook, activity, resource) { return false }
 
 class ActivityCollector {
   /**
    * Creates an instance of an ActivityCollector
+   *
    * @name ActivityCollector
    * @function
-   * @param {Array.<Number>} start start time obtained via `process.hrtime()`
-   * @param {StackCapturer} stackCapturer which is used to decide if a stack should be captured as well as to capture and process it
-   *                        @see [thlorenz/ah-stack-capturer](https://github.com/nodesource/ah-stack-capturer)
-   *                        The default capturer used doesn't ever capture a stack so this feature is turned off by default.
+   *
+   * @param {Object} $0
+   *
+   * @param {Array.<Number>} $0.start start time obtained via `process.hrtime()`
+   *
+   * @param {StackCapturer} [$0.stackCapturer=defaultStackCapturer] which is used to decide if a stack
+   * should be captured as well as to capture and process it @see
+   * [thlorenz/ah-stack-capturer](https://github.com/nodesource/ah-stack-capturer)
+   * The default capturer used doesn't ever capture a stack so this feature is
+   * turned off by default.
+   *
+   * @param {boolean} [$0.requireInit=false] when `true` any activities whose `init` hook we missed
+   * are ignored even if we see `before`, `after` and/or `destroy` hooks.
+   *
+   * @return {ActivityCollector} instance of ActivityCollector
    */
   constructor({
       start
     , captureResource = no
     , stackCapturer = defaultStackCapturer
+    , requireInit = false
   }) {
     this._start = start
     this._activities = new Map()
     this._stackCapturer = stackCapturer
     this._captureResource = captureResource
+    this._requireInit = requireInit
 
     this._asyncHook = async_hooks.createHook({
         init    : this._init.bind(this)
@@ -119,7 +134,8 @@ class ActivityCollector {
   _getActivity(id, hook) {
     const h = this._activities.get(id)
     if (!h) {
-      const stub = { id, type: 'Unknown' }
+      if (this._requireInit) return null
+      const stub = { id, type: UNKNOWN_TYPE }
       this._activities.set(id, stub)
       return stub
     }
@@ -137,6 +153,7 @@ class ActivityCollector {
 
   _before(id) {
     const h = this._getActivity(id, 'before')
+    if (h == null) return
     this._stamp(h, 'before')
     if (this._stackCapturer.shouldCaptureStack('before', h.type)) {
       if (h.beforeStacks == null) h.beforeStacks = []
@@ -146,6 +163,7 @@ class ActivityCollector {
 
   _after(id) {
     const h = this._getActivity(id, 'after')
+    if (h == null) return
     this._stamp(h, 'after')
     if (this._stackCapturer.shouldCaptureStack('after', h.type)) {
       if (h.afterStacks == null) h.afterStacks = []
@@ -155,6 +173,7 @@ class ActivityCollector {
 
   _destroy(id) {
     const h = this._getActivity(id, 'destroy')
+    if (h == null) return
     this._stamp(h, 'destroy')
     if (this._stackCapturer.shouldCaptureStack('destroy', h.type)) {
       h.destroyStack = this._stackCapturer.captureStack()
@@ -229,6 +248,14 @@ class ActivityCollector {
       console.log(`${a.type}:${a.id}:${a.triggerId}`)
     }
   }
+
+  /**
+   * Static getter that denotes the type given to activities whose type is unkown since
+   * we missed their `init` event.
+   *
+   * @name ActivityCollector#UNKNOWN_TYPE
+   */
+  static get UNKNOWN_TYPE() { return UNKNOWN_TYPE }
 }
 
 module.exports = ActivityCollector
