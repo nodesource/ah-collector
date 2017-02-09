@@ -146,7 +146,7 @@ class ActivityCollector {
     const activity = { id, type, triggerId }
     this._stamp(activity, 'init')
     this._activities.set(id, activity)
-    if (this._stackCapturer.shouldCaptureStack('init', activity.type)) {
+    if (this._stackCapturer.shouldCaptureStack('init', activity.type, activity)) {
       activity.initStack = this._stackCapturer.captureStack()
     }
     return activity
@@ -156,7 +156,7 @@ class ActivityCollector {
     const h = this._getActivity(id, 'before')
     if (h == null) return
     this._stamp(h, 'before')
-    if (this._stackCapturer.shouldCaptureStack('before', h.type)) {
+    if (this._stackCapturer.shouldCaptureStack('before', h.type, h)) {
       if (h.beforeStacks == null) h.beforeStacks = []
       h.beforeStacks.push(this._stackCapturer.captureStack())
     }
@@ -167,7 +167,7 @@ class ActivityCollector {
     const h = this._getActivity(id, 'after')
     if (h == null) return
     this._stamp(h, 'after')
-    if (this._stackCapturer.shouldCaptureStack('after', h.type)) {
+    if (this._stackCapturer.shouldCaptureStack('after', h.type, h)) {
       if (h.afterStacks == null) h.afterStacks = []
       h.afterStacks.push(this._stackCapturer.captureStack())
     }
@@ -178,7 +178,7 @@ class ActivityCollector {
     const h = this._getActivity(id, 'destroy')
     if (h == null) return
     this._stamp(h, 'destroy')
-    if (this._stackCapturer.shouldCaptureStack('destroy', h.type)) {
+    if (this._stackCapturer.shouldCaptureStack('destroy', h.type, h)) {
       h.destroyStack = this._stackCapturer.captureStack()
     }
     return h
