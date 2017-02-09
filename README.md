@@ -48,8 +48,17 @@ Creates an instance of an ActivityCollector
 
 **Parameters**
 
--   `start` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)>** start time obtained via `process.hrtime()`
--   `stackCapturer` **StackCapturer** which is used to decide if a stack should be captured as well as to capture and process it
+-   `$0` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+    -   `$0.start` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)>** start time obtained via `process.hrtime()`
+    -   `$0.stackCapturer` **StackCapturer?** which is used to decide if a stack
+        should be captured as well as to capture and process it @see
+        [thlorenz/ah-stack-capturer](https://github.com/nodesource/ah-stack-capturer)
+        The default capturer used doesn't ever capture a stack so this feature is
+        turned off by default. (optional, default `defaultStackCapturer`)
+    -   `$0.requireInit` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?** when `true` any activities whose `init` hook we missed
+        are ignored even if we see `before`, `after` and/or `destroy` hooks. (optional, default `false`)
+
+Returns **[ActivityCollector](#activitycollector)** instance of ActivityCollector
 
 ### activityCollector.enable
 
@@ -123,6 +132,11 @@ Dumps all types in the order they were collected including
 id and trigger id.
 
 Example: `FSREQWRAP:id:triggerId`
+
+### ActivityCollector#UNKNOWN_TYPE
+
+Static getter that denotes the type given to activities whose type is unkown since
+we missed their `init` event.
 
 ## License
 
